@@ -1,4 +1,118 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
 
 public class DepthFirstSearch {
-
+	
+	// List containing the nodes forming the solution
+	private List<Node> solution;
+	
+	
+	// List of nodes we've visited already
+	private List<Node> visitedNodes;
+	
+	/*
+	 *  Stack containing the states that are still yet to be searched. We need this
+	 *  to be LIFO for Depth First Search so we use a Stack.
+	 */
+	private Stack<Node> unsearchedNodes;
+	
+	// Boolean to store if we've found a solution
+	private boolean solutionFound;
+	
+	// Int to count the number of nodes visited
+	private int counter;
+	
+	public DepthFirstSearch() {
+		
+	}
+	
+	public List<Node> searchForSolution(Grid startState, Grid goalState) {
+		solutionFound = false;
+		counter = 0;
+		
+		solution = new ArrayList<Node>();
+		visitedNodes = new ArrayList<Node>();
+		unsearchedNodes = new Stack<Node>();
+		
+		List<Node> childNodes = new ArrayList<Node>();
+		
+		Node initialNode = new Node(startState);
+		unsearchedNodes.add(initialNode);
+		
+		Node currentNode = null;
+		boolean visited = false;
+		
+		while (!unsearchedNodes.isEmpty() && !solutionFound) {			
+			currentNode = unsearchedNodes.pop();
+			counter++;
+			
+			if (currentNode.getGrid().compareGrid(goalState)) {
+				solutionFound = true;
+				break;
+			}
+			
+			childNodes = currentNode.findChildren();
+			Collections.shuffle(childNodes);
+			
+			for (int i = 0; i < childNodes.size(); i++) {
+				// Check if we've already visited this child - if we have break out of the loop
+				
+				visited = false;
+				for (Node n : visitedNodes) {
+					if (childNodes.get(i).checkEqual(n)) {
+						visited = true;
+						break;
+					}
+				}
+				
+				for (Node n : unsearchedNodes) {
+					// Check if we've already visited this node but haven't searched it yet - if we have break out of loop
+					if (childNodes.get(i).checkEqual(n)) {
+						visited = true;
+						break;
+					}
+				}
+				
+				// If we haven't already been to this node then add it to our list of unsearched nodes
+				if (!visited) {
+					unsearchedNodes.add(childNodes.get(i));
+				}
+			}
+			
+			visitedNodes.add(currentNode);
+			unsearchedNodes.remove(currentNode);
+		}
+		
+		if (solutionFound) {
+			// We now need to go back recursively through node parents until we get back to the start state
+			boolean routeFound = false;
+			
+			solution.add(currentNode);
+			while (!routeFound) {
+				currentNode = currentNode.getParentNode();
+				solution.add(0, currentNode);
+				
+				if (currentNode.getGrid().compareGrid(startState)) {
+					routeFound = true;
+				}
+			}
+		} else {
+			System.out.println("No solution found.");
+		}
+		
+		printSolution();
+		return solution;
+	}
+	
+	private void printSolution() {
+		for (Node n : solution) {
+			n.getGrid().printGrid();
+			System.out.println();
+		}
+		
+		System.out.println("Nodes visited: " + counter);
+	}
+	
 }
