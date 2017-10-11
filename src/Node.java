@@ -6,7 +6,7 @@ public class Node {
 	private Grid grid;
 	
 	// List of child grids from this node
-	private List<Node> childNodes;
+	private ArrayList<Node> childNodes;
 	
 	// The parent node of this node
 	private Node parent;
@@ -23,7 +23,7 @@ public class Node {
 	 * Method to find the children of the node. Tries to move the agent each direction and adds 
 	 * the new node to the list if successful.
 	 */
-	public List<Node> findChildren() {
+	public ArrayList<Node> findChildren() {
 		Grid currentState; // Grid to be initialised to the current grid state each try
 		
 		// Initialise the grid to the current state and try moving the agent right
@@ -70,6 +70,13 @@ public class Node {
 	 */
 	public void setParentNode(Node node) {
 		this.parent = node;
+	}
+	
+	/*
+	 * Method to return the parent node of this node
+	 */
+	public Node getParentNode() {
+		return parent;
 	}
 	
 	/*
