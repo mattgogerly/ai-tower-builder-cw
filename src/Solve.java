@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Solve {
 	
 	public static void main(String[] args) {
@@ -8,8 +6,13 @@ public class Solve {
 		char[][] goalGrid = createGoalGrid(3, 3);
 		Grid goalState = new Grid(goalGrid, 3, 3);
 		
-		BreadthFirstSearch bfs = new BreadthFirstSearch();
-		bfs.searchForSolution(startState, goalState);
+		/*BreadthFirstSearch bfs = new BreadthFirstSearch();
+		bfs.searchForSolution(startState, goalState);*/
+		
+		System.out.println("Running DFS...");
+		
+		DepthFirstSearch dfs = new DepthFirstSearch();
+		dfs.searchForSolution(startState, goalState);
 	}
 	
 	public static char[][] createGoalGrid(int agentX, int agentY) {
