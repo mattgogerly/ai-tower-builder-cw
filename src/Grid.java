@@ -125,4 +125,35 @@ public class Grid {
 		
 		return successful;
 	}
+	
+	public boolean compareGrid(Grid g) {		
+		if (this.getWidth() != g.getWidth() || this.getHeight() != g.getHeight()) {
+			return false;
+		}
+		
+		boolean equal = true;
+		char[][] compGrid = g.getGrid();		
+		
+		for (int i = 0; i < this.getWidth(); i++) {
+			for (int j = 0; j < this.getHeight(); j++) {
+				if (grid[i][j] != compGrid[i][j]) {
+					equal = false;
+				}
+			}
+		}
+			
+		return equal;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public char[][] getGrid() {
+		return grid;
+	}
 }
