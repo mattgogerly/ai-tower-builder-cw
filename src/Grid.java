@@ -5,8 +5,8 @@ public class Grid {
 	/*
 	 * The width and height of the grid
 	 */
-	private final int width = 4;
-	private final int height = 4;
+	private int width = 4;
+	private int height = 4;
 	
 	/*
 	 * The X and Y coordinates of the agent
@@ -46,8 +46,35 @@ public class Grid {
 	/*
 	 * Constructor that copies an existing grid to a new one.
 	 */
-	public Grid(Grid existingGrid) {
+	public Grid(Grid g) {
+		width = g.getWidth();
+		height = g.getHeight();
 		
+		grid = new char[width][height];
+		
+		char[][] existingGrid = g.getGrid();
+		
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				grid[i][j] = existingGrid[i][j];
+			}
+		}
+		
+		agentX = g.getAgentX();
+		agentY = g.getAgentY();
+	}
+	
+	
+	/*
+	 * Constructor to create a grid from a given 2D array of chars with the x,y of agent
+	 */
+	public Grid(char[][] grid, int agentX, int agentY) {
+		height = grid.length;
+		width = grid[0].length;
+		
+		this.grid = grid;
+		this.agentX = agentX;
+		this.agentY = agentY;
 	}
 	
 	/*
@@ -97,7 +124,7 @@ public class Grid {
 				
 				successful = true;
 			} else {
-				System.err.println("Cannot move the agent outside of the grid!");
+				//
 			}
 			
 		} else if (y != 0) {
@@ -118,7 +145,7 @@ public class Grid {
 				
 				successful = true;
 			} else {
-				System.err.println("Cannot move the agent outside of the grid!");
+				//
 			}
 			
 		}
@@ -159,5 +186,13 @@ public class Grid {
 	
 	public char[][] getGrid() {
 		return grid;
+	}
+	
+	public int getAgentX() {
+		return agentX;
+	}
+	
+	public int getAgentY() {
+		return agentY;
 	}
 }
