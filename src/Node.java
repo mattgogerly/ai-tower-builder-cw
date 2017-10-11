@@ -1,4 +1,4 @@
 
-public class GridState {
+public class Node {
 
 }
