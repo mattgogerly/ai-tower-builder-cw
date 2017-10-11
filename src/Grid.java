@@ -126,7 +126,11 @@ public class Grid {
 		return successful;
 	}
 	
-	public boolean compareGrid(Grid g) {		
+	/*
+	 * Method to compare two grids. Returns true if equal, false otherwise.
+	 */
+	public boolean compareGrid(Grid g) {	
+		// If they're not the same dimensions they can't be the same so return false.
 		if (this.getWidth() != g.getWidth() || this.getHeight() != g.getHeight()) {
 			return false;
 		}
