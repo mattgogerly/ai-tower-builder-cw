@@ -32,6 +32,7 @@ public class Grid {
 			}
 		}
 		
+		// Initialise the blocks to their starting positions (bottom left of the grid)
 		grid[0][height - 1] = 'A';
 		grid[1][height - 1] = 'B';
 		grid[2][height - 1] = 'C';
@@ -95,8 +96,30 @@ public class Grid {
 				agentX = agentX - 1;
 				
 				successful = true;
+			} else {
+				System.err.println("Cannot move the agent outside of the grid!");
 			}
+			
 		} else if (y != 0) {
+			
+			// Sanity checking. Cannot move outside of the grid.
+			if (y > 0 && agentY < height - 1) {
+				grid[agentX][agentY] = grid[agentX][agentY + 1];
+				grid[agentX][agentY + 1] = AGENT_CHAR;
+				
+				agentY = agentY + 1;
+				
+				successful = true;
+			} else if (y < 0 && agentY > 0) {
+				grid[agentX][agentY] = grid[agentX][agentY - 1];
+				grid[agentX][agentY - 1] = AGENT_CHAR;
+				
+				agentY = agentY - 1;
+				
+				successful = true;
+			} else {
+				System.err.println("Cannot move the agent outside of the grid!");
+			}
 			
 		}
 		
