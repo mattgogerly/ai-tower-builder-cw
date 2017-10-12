@@ -156,7 +156,7 @@ public class Grid {
 	/*
 	 * Method to compare two grids. Returns true if equal, false otherwise.
 	 */
-	public boolean compareGrid(Grid g) {	
+	public boolean compareGrid(Grid g, boolean agentConsidered) {	
 		// If they're not the same dimensions they can't be the same so return false.
 		if (this.getWidth() != g.getWidth() || this.getHeight() != g.getHeight()) {
 			return false;
@@ -167,8 +167,17 @@ public class Grid {
 		
 		for (int i = 0; i < this.getWidth(); i++) {
 			for (int j = 0; j < this.getHeight(); j++) {
-				if (grid[i][j] != compGrid[i][j]) {
-					equal = false;
+				
+				if (agentConsidered) {
+					if (grid[i][j] != compGrid[i][j]) {
+						equal = false;
+					}
+				} else {
+					if (grid[i][j] != AGENT_CHAR && compGrid[i][j] != AGENT_CHAR) {
+						if (grid[i][j] != compGrid[i][j]) {
+							equal = false;
+						}
+					}
 				}
 			}
 		}
