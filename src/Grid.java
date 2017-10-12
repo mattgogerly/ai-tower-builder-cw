@@ -127,8 +127,6 @@ public class Grid {
 				agentX = agentX - 1;
 				
 				successful = true;
-			} else {
-				//
 			}
 			
 		} else if (y != 0) {
@@ -148,8 +146,6 @@ public class Grid {
 				agentY = agentY - 1;
 				
 				successful = true;
-			} else {
-				//
 			}
 			
 		}
