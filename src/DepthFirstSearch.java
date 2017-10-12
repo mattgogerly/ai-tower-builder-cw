@@ -48,7 +48,7 @@ public class DepthFirstSearch {
 			currentNode = unsearchedNodes.pop();
 			counter++;
 			
-			if (currentNode.getGrid().compareGrid(goalState)) {
+			if (currentNode.getGrid().compareGrid(goalState, true)) {
 				solutionFound = true;
 				break;
 			}
@@ -94,7 +94,7 @@ public class DepthFirstSearch {
 				currentNode = currentNode.getParentNode();
 				solution.add(0, currentNode);
 				
-				if (currentNode.getGrid().compareGrid(startState)) {
+				if (currentNode.getGrid().compareGrid(startState, true)) {
 					routeFound = true;
 				}
 			}

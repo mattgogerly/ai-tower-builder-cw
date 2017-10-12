@@ -89,6 +89,6 @@ public class Node {
 	 * Method to check if the grid at this node is equal to the grid at a specified grid
 	 */
 	public boolean checkEqual(Node node) {
-		return grid.compareGrid(node.getGrid());
+		return grid.compareGrid(node.getGrid(), true);
 	}
 }

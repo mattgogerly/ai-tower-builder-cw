@@ -27,7 +27,7 @@ public class BreadthFirstSearch {
 		
 	}
 	
-	public List<Node> searchForSolution(Grid startState, Grid goalState) {
+	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {
 		solutionFound = false;
 		counter = 0;
 		
@@ -47,18 +47,17 @@ public class BreadthFirstSearch {
 			currentNode = unsearchedNodes.poll();
 			counter++;
 			
-			if (currentNode.getGrid().compareGrid(goalState)) {
+			if (currentNode.getGrid().compareGrid(goalState, agentConsidered)) {
 				solutionFound = true;
 				break;
 			}
 			
 			childNodes = currentNode.findChildren();
 			
-			for (int i = 0; i < childNodes.size(); i++) {
-				// Check if we've already visited this child - if we have break out of the loop
-				
+			for (int i = 0; i < childNodes.size(); i++) {				
 				visited = false;
 				for (Node n : visitedNodes) {
+					// Check if we've already visited this child - if we have break out of the loop
 					if (childNodes.get(i).checkEqual(n)) {
 						visited = true;
 						break;
@@ -92,7 +91,7 @@ public class BreadthFirstSearch {
 				currentNode = currentNode.getParentNode();
 				solution.add(0, currentNode);
 				
-				if (currentNode.getGrid().compareGrid(startState)) {
+				if (currentNode.getGrid().compareGrid(startState, true)) {
 					routeFound = true;
 				}
 			}

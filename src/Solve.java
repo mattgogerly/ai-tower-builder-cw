@@ -6,7 +6,7 @@ public class Solve {
 		Grid goalState = createGoalGrid("XXXXXABCXXXXXXXT", 4, 4);
 		
 		BreadthFirstSearch bfs = new BreadthFirstSearch();
-		bfs.searchForSolution(startState, goalState);
+		bfs.searchForSolution(startState, goalState, false);
 		
 		/*DepthFirstSearch dfs = new DepthFirstSearch();
 		dfs.searchForSolution(startState, goalState);*/
