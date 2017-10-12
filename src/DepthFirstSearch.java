@@ -24,10 +24,6 @@ public class DepthFirstSearch {
 	// Int to count the number of nodes visited
 	private int counter;
 	
-	public DepthFirstSearch() {
-		
-	}
-	
 	public List<Node> searchForSolution(Grid startState, Grid goalState) {
 		solutionFound = false;
 		counter = 0;

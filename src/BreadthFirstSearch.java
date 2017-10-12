@@ -23,10 +23,6 @@ public class BreadthFirstSearch {
 	// Int to count the number of nodes visited
 	private int counter;
 	
-	public BreadthFirstSearch() {
-		
-	}
-	
 	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {
 		solutionFound = false;
 		counter = 0;
