@@ -99,13 +99,13 @@ public class BreadthFirstSearch {
 		return solution;
 	}
 	
-	private void printSolution() {
-		System.out.println("Nodes visited: " + counter);
-		
+	private void printSolution() {		
 		for (Node n : solution) {
 			n.getGrid().printGrid();
 			System.out.println();
 		}
+		
+		System.out.println("Nodes visited: " + counter);
 	}
 	
 }
