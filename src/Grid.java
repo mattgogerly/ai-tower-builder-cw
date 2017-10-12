@@ -11,8 +11,8 @@ public class Grid {
 	/*
 	 * The X and Y coordinates of the agent
 	 */
-	private int agentX;
-	private int agentY;
+	private Integer agentX;
+	private Integer agentY;
 	
 	/*
 	 * Chars to represent empty tiles and the agent tile
@@ -47,6 +47,10 @@ public class Grid {
 	 * Constructor that copies an existing grid to a new one.
 	 */
 	public Grid(Grid g) {
+		if (g.agentX == null || g.agentY == null) {
+			System.err.println("No agent was specified!");
+		}
+		
 		width = g.getWidth();
 		height = g.getHeight();
 		
