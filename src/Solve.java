@@ -3,43 +3,42 @@ public class Solve {
 	public static void main(String[] args) {
 		Grid startState = new Grid();
 		
-		char[][] goalGrid = createGoalGrid(3, 3);
-		Grid goalState = new Grid(goalGrid, 3, 3);
+		Grid goalState = createGoalGrid("XXXXXABCXXXXXXXT", 4, 4);
 		
-		/*BreadthFirstSearch bfs = new BreadthFirstSearch();
-		bfs.searchForSolution(startState, goalState);*/
+		BreadthFirstSearch bfs = new BreadthFirstSearch();
+		bfs.searchForSolution(startState, goalState);
 		
-		System.out.println("Running DFS...");
-		
-		DepthFirstSearch dfs = new DepthFirstSearch();
-		dfs.searchForSolution(startState, goalState);
+		/*DepthFirstSearch dfs = new DepthFirstSearch();
+		dfs.searchForSolution(startState, goalState);*/
 	}
 	
-	public static char[][] createGoalGrid(int agentX, int agentY) {
-		char[][] goalGrid = new char[4][4];
+	public static Grid createGoalGrid(String input, int width, int height) {
+		char[][] goalGrid = new char[width][height];
+		char[] temp = input.toCharArray();
 		
-		for (int i = 0; i < 4; i++) {
-			goalGrid[0][i] = 'X';
+		if ((width * height) != temp.length) {
+			System.err.print("Invalid input string");
 		}
 		
-		goalGrid[1][0] = 'X';
-		goalGrid[1][1] = 'A';
-		goalGrid[1][2] = 'B';
-		goalGrid[1][3] = 'C';
+		Integer agentX = null;
+		Integer agentY = null;
 		
-		goalGrid[2][0] = 'X';
-		goalGrid[2][1] = 'X';
-		goalGrid[2][2] = 'X';
-		goalGrid[2][3] = 'X';
+		int count = 0;
 		
-		goalGrid[3][0] = 'X';
-		goalGrid[3][1] = 'X';
-		goalGrid[3][2] = 'X';
-		goalGrid[3][3] = 'X';
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				
+				if (temp[count] == 'T') {
+					agentX = i;
+					agentY = j;
+				}
+				
+				goalGrid[i][j] = temp[count];
+				count++;
+			}
+		}
 		
-		goalGrid[agentX][agentY] = 'T';
-		
-		return goalGrid;
+		return new Grid(goalGrid, agentX, agentY);
 	}
 	
 }
