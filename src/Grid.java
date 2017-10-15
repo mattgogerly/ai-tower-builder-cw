@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Grid {
 	private char[][] grid; // 3D Array to store the state of the grid
@@ -165,16 +166,15 @@ public class Grid {
 		boolean equal = true;
 		char[][] compGrid = g.getGrid();		
 		
-		for (int i = 0; i < this.getWidth(); i++) {
-			for (int j = 0; j < this.getHeight(); j++) {
-				
-				if (agentConsidered) {
+		if (agentConsidered) {
+			if (!Arrays.deepEquals(grid, compGrid)) {
+				equal = false;
+			}
+		} else {
+			for (int i = 0; i < this.getWidth(); i++) {
+				for (int j = 0; j < this.getHeight(); j++) {					
 					if (grid[i][j] != compGrid[i][j]) {
-						equal = false;
-					}
-				} else {
-					if (grid[i][j] != AGENT_CHAR && compGrid[i][j] != AGENT_CHAR) {
-						if (grid[i][j] != compGrid[i][j]) {
+						if (!((grid[i][j] == AGENT_CHAR && compGrid[i][j] == EMPTY_CHAR) || (grid[i][j] == EMPTY_CHAR && compGrid[i][j] == AGENT_CHAR))) {
 							equal = false;
 						}
 					}
