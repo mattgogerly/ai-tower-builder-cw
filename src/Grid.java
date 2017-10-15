@@ -95,10 +95,10 @@ public class Grid {
 			}
 			
 			// Print next line
-			System.out.print( "\n" );
+			System.out.println();
 		}
 		
-		System.out.print( "\n" );
+		System.out.println();
 	}
 	
 	public boolean moveAgent(int x, int y) {
