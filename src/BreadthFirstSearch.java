@@ -44,8 +44,20 @@ public class BreadthFirstSearch {
 			
 			childNodes = currentNode.findChildren();
 			
-			for (int i = 0; i < childNodes.size(); i++) {								
-				unsearchedNodes.add(childNodes.get(i));
+			boolean unexpanded = false;
+			for (int i = 0; i < childNodes.size(); i++) {	
+				unexpanded = false;
+				
+				for (Node node : unsearchedNodes) {
+					if (childNodes.get(i).checkEqual(node)) {
+						unexpanded = true;
+						break;
+					}
+				}
+				
+				if (!unexpanded) {
+					unsearchedNodes.add(childNodes.get(i));
+				}
 			}
 			
 			unsearchedNodes.remove(currentNode);
@@ -78,8 +90,6 @@ public class BreadthFirstSearch {
 			n.getGrid().printGrid();
 			System.out.println();
 		}
-		
-		System.out.println(solution.get(solution.size() - 1));
 		
 		System.out.println("Nodes visited: " + counter);
 	}
