@@ -8,10 +8,6 @@ public class DepthFirstSearch {
 	// List containing the nodes forming the solution
 	private List<Node> solution;
 	
-	
-	// List of nodes we've visited already
-	private List<Node> visitedNodes;
-	
 	/*
 	 *  Stack containing the states that are still yet to be searched. We need this
 	 *  to be LIFO for Depth First Search so we use a Stack.
@@ -24,12 +20,11 @@ public class DepthFirstSearch {
 	// Int to count the number of nodes visited
 	private int counter;
 	
-	public List<Node> searchForSolution(Grid startState, Grid goalState) {
+	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {
 		solutionFound = false;
 		counter = 0;
 		
 		solution = new ArrayList<Node>();
-		visitedNodes = new ArrayList<Node>();
 		unsearchedNodes = new Stack<Node>();
 		
 		List<Node> childNodes = new ArrayList<Node>();
@@ -38,13 +33,12 @@ public class DepthFirstSearch {
 		unsearchedNodes.add(initialNode);
 		
 		Node currentNode = null;
-		boolean visited = false;
 		
 		while (!unsearchedNodes.isEmpty() && !solutionFound) {			
 			currentNode = unsearchedNodes.pop();
 			counter++;
 			
-			if (currentNode.getGrid().compareGrid(goalState, true)) {
+			if (currentNode.getGrid().compareGrid(goalState, agentConsidered)) {
 				solutionFound = true;
 				break;
 			}
@@ -52,32 +46,10 @@ public class DepthFirstSearch {
 			childNodes = currentNode.findChildren();
 			Collections.shuffle(childNodes);
 			
-			for (int i = 0; i < childNodes.size(); i++) {
-				// Check if we've already visited this child - if we have break out of the loop
-				
-				visited = false;
-				for (Node n : visitedNodes) {
-					if (childNodes.get(i).checkEqual(n)) {
-						visited = true;
-						break;
-					}
-				}
-				
-				for (Node n : unsearchedNodes) {
-					// Check if we've already visited this node but haven't searched it yet - if we have break out of loop
-					if (childNodes.get(i).checkEqual(n)) {
-						visited = true;
-						break;
-					}
-				}
-				
-				// If we haven't already been to this node then add it to our list of unsearched nodes
-				if (!visited) {
-					unsearchedNodes.add(childNodes.get(i));
-				}
+			for (int i = 0; i < childNodes.size(); i++) {				
+				unsearchedNodes.add(childNodes.get(i));
 			}
-			
-			visitedNodes.add(currentNode);
+	
 			unsearchedNodes.remove(currentNode);
 		}
 		
