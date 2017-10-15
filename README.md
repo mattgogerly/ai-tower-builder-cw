@@ -1,1 +1,3 @@
-# tower-builder-coursework
+# Tower Building AI (Intelligent Systems CW 2017)
+
+The aim of this coursework was to implement 4 types of search (Breadth First Search, Depth First Search, Iterative Deepening Depth First Search and A* Heuristic) that can find a solution to a tower building puzzle. This puzzle is similar to the 8-puzzle but rather than having 8 tiles to move the board consists of 3 building blocks and an agent, with the rest of the spaces empty. Once a solution has been found to move the board from the start state to the goal state the algorithm should print the solution and the number of nodes checked in order for me to compare the algorithms space/time complexity and optimality/completeness.
