@@ -5,11 +5,11 @@ public class Solve {
 		
 		Grid goalState = createGoalGrid("XXXXXABCXXXXXXXT", 4, 4);
 		
-		BreadthFirstSearch bfs = new BreadthFirstSearch();
-		bfs.searchForSolution(startState, goalState, false);
+		/*BreadthFirstSearch bfs = new BreadthFirstSearch();
+		bfs.searchForSolution(startState, goalState, false);*/
 		
-		/*DepthFirstSearch dfs = new DepthFirstSearch();
-		dfs.searchForSolution(startState, goalState);*/
+		DepthFirstSearch dfs = new DepthFirstSearch();
+		dfs.searchForSolution(startState, goalState, false);
 	}
 	
 	public static Grid createGoalGrid(String input, int width, int height) {
