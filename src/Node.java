@@ -10,12 +10,15 @@ public class Node {
 	// The parent node of this node
 	private Node parent;
 	
+	private int depth;
+	
 	/*
 	 * Constructor to create a new Node with initial grid and empty list of child nodes.
 	 */
 	public Node(Grid grid) {
 		this.grid = grid;
 		this.childNodes = new ArrayList<Node>();
+		this.depth = 0;
 	}
 	
 	/*
@@ -32,6 +35,7 @@ public class Node {
 			Node newChild = new Node(currentState);
 			// Set the new node's parent to this
 			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
 			// Add the new node to this node's list of children
 			childNodes.add(newChild);
 		}
@@ -41,6 +45,7 @@ public class Node {
 		if (currentState.moveAgent(-1, 0)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
 			childNodes.add(newChild);
 		}
 		
@@ -49,6 +54,7 @@ public class Node {
 		if (currentState.moveAgent(0, 1)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
 			childNodes.add(newChild);
 		}
 		
@@ -57,6 +63,7 @@ public class Node {
 		if (currentState.moveAgent(0, -1)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
 			childNodes.add(newChild);
 		}
 		
@@ -76,6 +83,20 @@ public class Node {
 	 */
 	public Node getParentNode() {
 		return parent;
+	}
+	
+	/*
+	 * Method to set the depth of this node
+	 */
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	
+	/*
+	 * Method to get the depth of this node
+	 */
+	public int getDepth() {
+		return depth;
 	}
 	
 	/*
