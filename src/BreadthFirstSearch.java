@@ -19,19 +19,20 @@ public class BreadthFirstSearch {
 	// Int to count the number of nodes visited
 	private int counter;
 	
-	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {
-		solutionFound = false;
-		counter = 0;
-		
+	public BreadthFirstSearch() {
 		solution = new ArrayList<Node>();
 		unsearchedNodes = new LinkedList<Node>();
 		
-		List<Node> childNodes = new ArrayList<Node>();
-		
+		solutionFound = false;
+		counter = 0;
+	}
+	
+	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {		
 		Node initialNode = new Node(startState);
 		unsearchedNodes.add(initialNode);
 		
 		Node currentNode = null;
+		List<Node> childNodes = new ArrayList<Node>();
 		
 		while (!unsearchedNodes.isEmpty() && !solutionFound) {			
 			currentNode = unsearchedNodes.poll();
