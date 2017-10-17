@@ -6,10 +6,13 @@ public class Solve {
 		Grid goalState = createGoalGrid("XXXXXABCXXXXXXXT", 4, 4);
 		
 		/*BreadthFirstSearch bfs = new BreadthFirstSearch();
-		bfs.searchForSolution(startState, goalState, false);*/
+		bfs.searchForSolution(startState, goalState, false);
 		
 		DepthFirstSearch dfs = new DepthFirstSearch();
-		dfs.searchForSolution(startState, goalState, false);
+		dfs.searchForSolution(startState, goalState, false);*/
+		
+		IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
+		ids.searchForSolution(startState, goalState, false);
 	}
 	
 	public static Grid createGoalGrid(String input, int width, int height) {
