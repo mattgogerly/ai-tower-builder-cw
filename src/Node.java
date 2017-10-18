@@ -10,7 +10,10 @@ public class Node {
 	// The parent node of this node
 	private Node parent;
 	
+	// The depth of this node
 	private int depth;
+	
+	private float heuristic;
 	
 	/*
 	 * Constructor to create a new Node with initial grid and empty list of child nodes.
@@ -19,6 +22,7 @@ public class Node {
 		this.grid = grid;
 		this.childNodes = new ArrayList<Node>();
 		this.depth = 0;
+		this.heuristic = 0;
 	}
 	
 	/*
@@ -69,6 +73,43 @@ public class Node {
 		
 		// Return the list of child nodes for this node
 		return childNodes;
+	}
+	
+	/*
+	 * Method to calculate the heuristic value for this node
+	 */
+	public void calculateHeuristic(Grid goalState) {
+		Grid currentState = this.getGrid();
+		
+		int distance = 0;
+		int totalDistance = 0;
+		
+		int[] currentPos = new int[2];
+		int[] requiredPos = new int[2];
+		
+		currentPos = currentState.findInGrid('A');
+		requiredPos = goalState.findInGrid('A');
+		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
+		totalDistance += distance;
+		
+		currentPos = currentState.findInGrid('B');
+		requiredPos = goalState.findInGrid('B');
+		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
+		totalDistance += distance;
+		
+		currentPos = currentState.findInGrid('C');
+		requiredPos = goalState.findInGrid('C');
+		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
+		totalDistance += distance;
+		
+		heuristic = depth + totalDistance;
+	}
+	
+	/*
+	 * Method to get the heuristic value for this node
+	 */
+	public float getHeuristic() {
+		return heuristic;
 	}
 	
 	/*
