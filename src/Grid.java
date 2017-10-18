@@ -27,9 +27,9 @@ public class Grid {
 	public Grid() {
 		grid = new char[width][height];
 		
-		for (int i = 0; i < height - 1; i++) {
-			for (int j = 0; j < width; j++ ) {
-				grid[j][i] = EMPTY_CHAR;
+		for (int y = 0; y < height - 1; y++) {
+			for (int x = 0; x < width; x++ ) {
+				grid[x][y] = EMPTY_CHAR;
 			}
 		}
 		
@@ -59,9 +59,9 @@ public class Grid {
 		
 		char[][] existingGrid = g.getGrid();
 		
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				grid[i][j] = existingGrid[i][j];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				grid[x][y] = existingGrid[x][y];
 			}
 		}
 		
@@ -171,10 +171,10 @@ public class Grid {
 				equal = false;
 			}
 		} else {
-			for (int i = 0; i < this.getWidth(); i++) {
-				for (int j = 0; j < this.getHeight(); j++) {					
-					if (grid[i][j] != compGrid[i][j]) {
-						if (!((grid[i][j] == AGENT_CHAR && compGrid[i][j] == EMPTY_CHAR) || (grid[i][j] == EMPTY_CHAR && compGrid[i][j] == AGENT_CHAR))) {
+			for (int y = 0; y < this.getHeight(); y++) {
+				for (int x = 0; x < this.getWidth(); x++) {					
+					if (grid[x][y] != compGrid[x][y]) {
+						if (!((grid[x][y] == AGENT_CHAR && compGrid[x][y] == EMPTY_CHAR) || (grid[x][y] == EMPTY_CHAR && compGrid[x][y] == AGENT_CHAR))) {
 							equal = false;
 						}
 					}
@@ -183,6 +183,23 @@ public class Grid {
 		}
 			
 		return equal;
+	}
+	
+	public int[] findInGrid(char toFind) {
+		int[] pos = new int[2];
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (grid[x][y] == toFind) {
+					pos[0] = x;
+					pos[1] = y;
+					
+					break;
+				}
+			}
+		}
+		
+		return pos;
 	}
 	
 	public int getWidth() {
