@@ -102,7 +102,7 @@ public class Node {
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
 		
-		heuristic = depth + totalDistance;
+		heuristic = totalDistance;
 	}
 	
 	/*
