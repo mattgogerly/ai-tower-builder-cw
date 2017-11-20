@@ -49,6 +49,7 @@ public class AStarSearch {
 			boolean unexpanded = false;
 			for (int i = 0; i < childNodes.size(); i++) {	
 				Node child = childNodes.get(i);
+				
 				unexpanded = false;
 				
 				for (Node node : unsearchedNodes) {
