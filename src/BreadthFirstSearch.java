@@ -45,23 +45,9 @@ public class BreadthFirstSearch {
 			
 			childNodes = currentNode.findChildren();
 			
-			boolean unexpanded = false;
 			for (int i = 0; i < childNodes.size(); i++) {	
-				unexpanded = false;
-				
-				for (Node node : unsearchedNodes) {
-					if (childNodes.get(i).checkEqual(node)) {
-						unexpanded = true;
-						break;
-					}
-				}
-				
-				if (!unexpanded) {
-					unsearchedNodes.add(childNodes.get(i));
-				}
+				unsearchedNodes.add(childNodes.get(i));
 			}
-			
-			unsearchedNodes.remove(currentNode);
 		}
 		
 		if (solutionFound) {
