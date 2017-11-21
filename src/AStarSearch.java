@@ -46,38 +46,29 @@ public class AStarSearch {
 			
 			childNodes = currentNode.findChildren();
 			
-			boolean unexpanded = false;
 			for (int i = 0; i < childNodes.size(); i++) {	
 				Node child = childNodes.get(i);
 				
-				unexpanded = false;
-				
-				for (Node node : unsearchedNodes) {
-					if (child.checkEqual(node)) {
-						unexpanded = true;
-						break;
-					}
-				}
-				
-				if (!unexpanded) {
-					child.calculateHeuristic(goalState);
-					boolean inserted = false;
+				child.calculateHeuristic(goalState);
+				boolean inserted = false;
 					
-					for (int j = 0; j < unsearchedNodes.size(); j++) {
+				for (int j = 0; j < unsearchedNodes.size(); j++) {
+					Node nodeAtPos = unsearchedNodes.get(j);
+					
+					if (child.getGrid().compareGrid(nodeAtPos.getGrid(), true)) {
 						if (child.getHeuristic() < unsearchedNodes.get(j).getHeuristic()) {
 							unsearchedNodes.add(j, child);
-							inserted = true;
 							break;
 						}
-					}
-					
-					if (!inserted) {
-						unsearchedNodes.add(child);
+						
+						inserted = true;
 					}
 				}
+					
+				if (!inserted) {
+					unsearchedNodes.add(child);
+				}
 			}
-			
-			unsearchedNodes.remove(currentNode);
 		}
 		
 		if (solutionFound) {
