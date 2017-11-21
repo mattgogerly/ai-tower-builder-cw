@@ -38,7 +38,6 @@ public class IterativeDeepeningSearch {
 			}
 			
 			maxDepth++;
-			counter = 0;
 		}
 		
 		return solution;
@@ -67,8 +66,6 @@ public class IterativeDeepeningSearch {
 				for (int i = 0; i < childNodes.size(); i++) {				
 					unsearchedNodes.add(childNodes.get(i));
 				}
-		
-				unsearchedNodes.remove(currentNode);
 			}
 		}
 		
@@ -89,11 +86,13 @@ public class IterativeDeepeningSearch {
 			System.out.println();
 			System.out.println("Found a solution!");
 			System.out.println();
+			
+			printSolution();
 		} else {
+			printSolution();
 			System.out.println("No solution found, increasing depth to " + (maxDepth + 1) + "..");
 		}
-		
-		printSolution();
+	
 		return solution;
 	}
 	
