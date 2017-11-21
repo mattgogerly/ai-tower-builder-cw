@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class AStarSearch {
 	
@@ -11,7 +11,7 @@ public class AStarSearch {
 	 *  List containing the states that are still yet to be searched. We need this
 	 *  to be FIFO so we use a Linked List (or any queue).
 	 */
-	private LinkedList<Node> unsearchedNodes;
+	private PriorityQueue<Node> unsearchedNodes;
 	
 	// Boolean to store if we've found a solution
 	private boolean solutionFound;
@@ -21,7 +21,7 @@ public class AStarSearch {
 	
 	public AStarSearch() {
 		solution = new ArrayList<Node>();
-		unsearchedNodes = new LinkedList<Node>();
+		unsearchedNodes = new PriorityQueue<Node>();
 		
 		solutionFound = false;
 		counter = 0;
@@ -48,26 +48,9 @@ public class AStarSearch {
 			
 			for (int i = 0; i < childNodes.size(); i++) {	
 				Node child = childNodes.get(i);
-				
 				child.calculateHeuristic(goalState);
-				boolean inserted = false;
 					
-				for (int j = 0; j < unsearchedNodes.size(); j++) {
-					Node nodeAtPos = unsearchedNodes.get(j);
-					
-					if (child.getGrid().compareGrid(nodeAtPos.getGrid(), true)) {
-						if (child.getHeuristic() < unsearchedNodes.get(j).getHeuristic()) {
-							unsearchedNodes.add(j, child);
-							break;
-						}
-						
-						inserted = true;
-					}
-				}
-					
-				if (!inserted) {
-					unsearchedNodes.add(child);
-				}
+				unsearchedNodes.add(child);
 			}
 		}
 		
