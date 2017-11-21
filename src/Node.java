@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable<Node> {
 	// The state of the grid at this node
 	private Grid grid;
 	
@@ -32,9 +32,9 @@ public class Node {
 	public ArrayList<Node> findChildren() {
 		Grid currentState; // Grid to be initialised to the current grid state each try
 		
-		// Initialise the grid to the current state and try moving the agent right
+		// Initialise the grid to the current state and try moving the agent up
 		currentState = new Grid(grid);
-		if (currentState.moveAgent(1, 0)) {
+		if (currentState.moveAgent(0, -1)) {
 			// Create a new node with the new state
 			Node newChild = new Node(currentState);
 			// Set the new node's parent to this
@@ -44,9 +44,9 @@ public class Node {
 			childNodes.add(newChild);
 		}
 		
-		// Initialise the grid to the current state and try moving the agent left
+		// Initialise the grid to the current state and try moving the agent right
 		currentState = new Grid(grid);
-		if (currentState.moveAgent(-1, 0)) {
+		if (currentState.moveAgent(1, 0)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
 			newChild.setDepth(this.getDepth() + 1);
@@ -62,9 +62,9 @@ public class Node {
 			childNodes.add(newChild);
 		}
 		
-		// Initialise the grid to the current state and try moving the agent up
+		// Initialise the grid to the current state and try moving the agent left
 		currentState = new Grid(grid);
-		if (currentState.moveAgent(0, -1)) {
+		if (currentState.moveAgent(-1, 0)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
 			newChild.setDepth(this.getDepth() + 1);
@@ -87,22 +87,33 @@ public class Node {
 		int[] currentPos = new int[2];
 		int[] requiredPos = new int[2];
 		
+		totalDistance = 3;
+		
 		currentPos = currentState.findInGrid('A');
 		requiredPos = goalState.findInGrid('A');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
+		if (distance == 0) {
+			totalDistance--;
+		}
 		
 		currentPos = currentState.findInGrid('B');
 		requiredPos = goalState.findInGrid('B');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
+		if (distance == 0) {
+			totalDistance--;
+		}
 		
 		currentPos = currentState.findInGrid('C');
 		requiredPos = goalState.findInGrid('C');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
+		if (distance == 0) {
+			totalDistance--;
+		}
 		
-		heuristic = totalDistance;
+		heuristic = totalDistance + depth;
 	}
 	
 	/*
@@ -152,5 +163,15 @@ public class Node {
 	 */
 	public boolean checkEqual(Node node) {
 		return grid.compareGrid(node.getGrid(), true);
+	}
+	
+	public int compareTo(Node b) {
+		if (this.getHeuristic() < b.getHeuristic()) {
+			return -1;
+		} else if (this.getHeuristic() > b.getHeuristic()) {
+			return 1;
+		}
+		
+		return 0;
 	}
 }
