@@ -44,6 +44,15 @@ public class Node implements Comparable<Node> {
 			childNodes.add(newChild);
 		}
 		
+		// Initialise the grid to the current state and try moving the agent left
+		currentState = new Grid(grid);
+		if (currentState.moveAgent(-1, 0)) {
+			Node newChild = new Node(currentState);
+			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
+			childNodes.add(newChild);
+		}
+		
 		// Initialise the grid to the current state and try moving the agent right
 		currentState = new Grid(grid);
 		if (currentState.moveAgent(1, 0)) {
@@ -56,15 +65,6 @@ public class Node implements Comparable<Node> {
 		// Initialise the grid to the current state and try moving the agent down
 		currentState = new Grid(grid);
 		if (currentState.moveAgent(0, 1)) {
-			Node newChild = new Node(currentState);
-			newChild.setParentNode(this);
-			newChild.setDepth(this.getDepth() + 1);
-			childNodes.add(newChild);
-		}
-		
-		// Initialise the grid to the current state and try moving the agent left
-		currentState = new Grid(grid);
-		if (currentState.moveAgent(-1, 0)) {
 			Node newChild = new Node(currentState);
 			newChild.setParentNode(this);
 			newChild.setDepth(this.getDepth() + 1);
