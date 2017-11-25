@@ -14,8 +14,8 @@ public class Solve {
 		// IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
 		// ids.searchForSolution(startState, goalState, false);
 		
-		AStarSearch ass = new AStarSearch();
-		ass.searchForSolution(startState, goalState, false);
+		 AStarSearch ass = new AStarSearch();
+		 ass.searchForSolution(startState, goalState, false);
 	}
 	
 	public static Grid createGoalGrid(String input, int width, int height) {

@@ -5,64 +5,83 @@ import java.util.Stack;
 
 public class DepthFirstSearch {
 	
-	// List containing the nodes forming the solution
-	private List<Node> solution;
+	// Stack containing the nodes forming the solution
+	private Stack<Node> solution;
 	
 	/*
 	 *  Stack containing the states that are still yet to be searched. We need this
 	 *  to be LIFO for Depth First Search so we use a Stack.
 	 */
-	private Stack<Node> unsearchedNodes;
+	private Stack<Node> fringe;
 	
-	// Boolean to store if we've found a solution
+	// boolean to store if we've found a solution
 	private boolean solutionFound;
 	
-	// Int to count the number of nodes visited
+	// int to count the number of nodes visited
 	private int counter;
 	
+	/*
+	 * Constructor to initialise a new DFS
+	 */
 	public DepthFirstSearch() {
-		solution = new ArrayList<Node>();
-		unsearchedNodes = new Stack<Node>();
+		solution = new Stack<Node>();
+		fringe = new Stack<Node>();
 		
 		solutionFound = false;
 		counter = 0;
 	}
 	
-	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {		
+	/*
+	 * Method to search for a solution given a start state, goal state and whether we're considering
+	 * the agent's position as part of the goal
+	 */
+	public List<Node> searchForSolution(Grid startState, Grid goalState, boolean agentConsidered) {
+		// Initialise the initial node and add it to the fringe
 		Node initialNode = new Node(startState);
-		unsearchedNodes.add(initialNode);
+		fringe.add(initialNode);
 		
+		// Set up our helper Node and List of children
 		Node currentNode = null;
 		List<Node> childNodes = new ArrayList<Node>();
 		
-		while (!unsearchedNodes.isEmpty() && !solutionFound) {			
-			currentNode = unsearchedNodes.pop();
+		// While we don't have a solution and there are nodes in the fringe
+		while (!fringe.isEmpty() && !solutionFound) {
+			// Get the current node and remove it from the fringe
+			currentNode = fringe.pop();
 			counter++;
 			
+			// If this node is our goal then break 
 			if (currentNode.getGrid().compareGrid(goalState, agentConsidered)) {
 				solutionFound = true;
 				break;
 			}
 			
+			// Otherwise get the children of this node and then randomise it's order (prevents looping)
 			childNodes = currentNode.findChildren();
 			Collections.shuffle(childNodes);
 			
-			for (int i = 0; i < childNodes.size(); i++) {				
-				unsearchedNodes.add(childNodes.get(i));
+			// For each Node in the list of children
+			for (Node n : childNodes) {
+				n.calculateHeuristic(goalState);
+				fringe.add(n);
 			}
-	
-			unsearchedNodes.remove(currentNode);
 		}
 		
+		// If we've found a solution
 		if (solutionFound) {
 			// We now need to go back recursively through node parents until we get back to the start state
 			boolean routeFound = false;
 			
-			solution.add(currentNode);
+			// Add the last node to the solution stack
+			solution.push(currentNode);
+			
+			// While we haven't finished the route
 			while (!routeFound) {
+				// Find the current node's parent and add it to the stack
 				currentNode = currentNode.getParentNode();
-				solution.add(0, currentNode);
+				solution.push(currentNode);
 				
+				// If this node is the start state then we've found our route
 				if (currentNode.getGrid().compareGrid(startState, true)) {
 					routeFound = true;
 				}
@@ -71,17 +90,26 @@ public class DepthFirstSearch {
 			System.out.println("No solution found.");
 		}
 		
+		// Print the solution
 		printSolution();
 		return solution;
 	}
 	
-	private void printSolution() {
-		for (Node n : solution) {
-			n.getGrid().printGrid();
-			System.out.println();
-		}
-		
-		System.out.println("Nodes visited: " + counter);
+	/*                                                                           
+	 * Method to print our solution and some statistics                          
+	 */                                                                          
+	private void printSolution() {                                               
+		// Save the size of the stack since we'll be popping it                  
+		int moves = solution.size() - 1;                                         
+		                                                                         
+		// While the stack isn't empty pop it, get the grid and print it         
+		while (!solution.isEmpty()) {                                            
+			solution.pop().getGrid().printGrid();                                
+			System.out.println();                                                
+		}                                                                        
+		                                                                         
+		System.out.println("Nodes visited: " + counter);                         
+		System.out.println("Number of moves from start to goal state: " + moves);
 	}
 	
 }

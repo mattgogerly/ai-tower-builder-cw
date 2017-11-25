@@ -13,6 +13,7 @@ public class Node implements Comparable<Node> {
 	// The depth of this node
 	private int depth;
 	
+	// The heuristic calculated
 	private float heuristic;
 	
 	/*
@@ -44,6 +45,15 @@ public class Node implements Comparable<Node> {
 			childNodes.add(newChild);
 		}
 		
+		// Initialise the grid to the current state and try moving the agent down
+		currentState = new Grid(grid);
+		if (currentState.moveAgent(0, 1)) {
+			Node newChild = new Node(currentState);
+			newChild.setParentNode(this);
+			newChild.setDepth(this.getDepth() + 1);
+			childNodes.add(newChild);
+		}
+		
 		// Initialise the grid to the current state and try moving the agent left
 		currentState = new Grid(grid);
 		if (currentState.moveAgent(-1, 0)) {
@@ -62,15 +72,6 @@ public class Node implements Comparable<Node> {
 			childNodes.add(newChild);
 		}
 		
-		// Initialise the grid to the current state and try moving the agent down
-		currentState = new Grid(grid);
-		if (currentState.moveAgent(0, 1)) {
-			Node newChild = new Node(currentState);
-			newChild.setParentNode(this);
-			newChild.setDepth(this.getDepth() + 1);
-			childNodes.add(newChild);
-		}
-		
 		// Return the list of child nodes for this node
 		return childNodes;
 	}
@@ -81,39 +82,34 @@ public class Node implements Comparable<Node> {
 	public void calculateHeuristic(Grid goalState) {
 		Grid currentState = this.getGrid();
 		
+		// ints to store the distance between the current position of a char and its goal position
 		int distance = 0;
 		int totalDistance = 0;
 		
+		// int array to store the x,y of the current/goal positions
 		int[] currentPos = new int[2];
 		int[] requiredPos = new int[2];
 		
-		totalDistance = 3;
-		
+		// Find the distance between the current position of A and it's goal position
 		currentPos = currentState.findInGrid('A');
 		requiredPos = goalState.findInGrid('A');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
-		if (distance == 0) {
-			totalDistance--;
-		}
 		
+		// Find the distance between the current position of B and it's goal position
 		currentPos = currentState.findInGrid('B');
 		requiredPos = goalState.findInGrid('B');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
-		if (distance == 0) {
-			totalDistance--;
-		}
 		
+		// Find the distance between the current position of C and it's goal position
 		currentPos = currentState.findInGrid('C');
 		requiredPos = goalState.findInGrid('C');
 		distance = Math.abs(currentPos[0] - requiredPos[0]) + Math.abs(currentPos[1] - requiredPos[1]);
 		totalDistance += distance;
-		if (distance == 0) {
-			totalDistance--;
-		}
 		
-		heuristic = totalDistance + depth;
+		// Our heuristic is the total distance + the current depth (reduced since it's a small grid)
+		heuristic = totalDistance + depth / 4;
 	}
 	
 	/*
@@ -165,6 +161,9 @@ public class Node implements Comparable<Node> {
 		return grid.compareGrid(node.getGrid(), true);
 	}
 	
+	/*
+	 * Method to compare two Nodes (used for queue adding)
+	 */
 	public int compareTo(Node b) {
 		if (this.getHeuristic() < b.getHeuristic()) {
 			return -1;

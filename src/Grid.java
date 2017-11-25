@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Grid {
-	private char[][] grid; // 3D Array to store the state of the grid
+	private char[][] grid; // 2D Array to store the state of the grid
 	
 	/*
 	 * The width and height of the grid
@@ -55,25 +55,28 @@ public class Grid {
 		width = g.getWidth();
 		height = g.getHeight();
 		
+		// Initialise a new array of the correct size
 		grid = new char[width][height];
 		
 		char[][] existingGrid = g.getGrid();
 		
+		// Loop over each row then column and set each element equal to the same element in our new array
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				grid[x][y] = existingGrid[x][y];
 			}
 		}
 		
+		// Set the agents position
 		agentX = g.getAgentX();
 		agentY = g.getAgentY();
 	}
 	
-	
 	/*
-	 * Constructor to create a grid from a given 2D array of chars with the x,y of agent
+	 * Constructor to create a grid from a given 2D array of chars with the x,y of the agent
 	 */
 	public Grid(char[][] grid, int agentX, int agentY) {
+		// Set the width and height
 		height = grid.length;
 		width = grid[0].length;
 		
@@ -87,10 +90,8 @@ public class Grid {
 	 */
 	public void printGrid()
 	{
-		for ( int y = 0; y < height; y++)
-		{
-			for ( int x = 0; x < width; x++ )
-			{
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				// Print the element at that position
 				System.out.print( grid[x][y] + " " );
 			}
@@ -102,9 +103,13 @@ public class Grid {
 		System.out.println();
 	}
 	
+	/*
+	 * Method to move the agent by a specified x or y distance
+	 */
 	public boolean moveAgent(int x, int y) {
 		boolean successful = false;
 		
+		// We only want to be able to move the agent one tile at a time
 		if (x > 1 || x < -1 || y > 1 || y < -1) {
 			System.err.println("Cannot move the agent more than one tile at a time!");
 			return successful;
@@ -115,16 +120,25 @@ public class Grid {
 			
 			// Sanity checking. Cannot move outside of the grid.
 			if (x > 0 && agentX < width - 1) {
+				
+				// Move right. Set the current agent position's tile to the contents of the tile to the right
 				grid[agentX][agentY] = grid[agentX + 1][agentY];
+				
+				// Set the right hand tile to the agent character
 				grid[agentX + 1][agentY] = AGENT_CHAR;
 				
+				// Set the new agent x position
 				agentX = agentX + 1;
 				
 				successful = true;
 			} else if (x < 0 && agentX > 0) {
+				// Move left. Set the current agent position's tile to the contents of the tile to the left
 				grid[agentX][agentY] = grid[agentX - 1][agentY];
+				
+				// Set the right hand tile to the agent character
 				grid[agentX - 1][agentY] = AGENT_CHAR;
 				
+				// Set the new agent x position
 				agentX = agentX - 1;
 				
 				successful = true;
@@ -134,16 +148,24 @@ public class Grid {
 			
 			// Sanity checking. Cannot move outside of the grid.
 			if (y > 0 && agentY < height - 1) {
+				// Move down. Set the current agent position's tile to the contents of the tile below it
 				grid[agentX][agentY] = grid[agentX][agentY + 1];
+				
+				// Set the below tile to the agent character
 				grid[agentX][agentY + 1] = AGENT_CHAR;
 				
+				// Set the new agent y position
 				agentY = agentY + 1;
 				
 				successful = true;
 			} else if (y < 0 && agentY > 0) {
+				// Move up. Set the current agent position's tile to the contents of the tile above it
 				grid[agentX][agentY] = grid[agentX][agentY - 1];
+				
+				// Set the above tile to the agent character.
 				grid[agentX][agentY - 1] = AGENT_CHAR;
 				
+				// Set the new agent y position
 				agentY = agentY - 1;
 				
 				successful = true;
@@ -163,17 +185,25 @@ public class Grid {
 			return false;
 		}
 		
+		// Assume they're equal to begin with
 		boolean equal = true;
 		char[][] compGrid = g.getGrid();		
 		
+		// If we're considering the agent we can just use deep equals
 		if (agentConsidered) {
 			if (!Arrays.deepEquals(grid, compGrid)) {
 				equal = false;
 			}
 		} else {
+			// Otherwise we have to use this beast...
+			
+			// Loop over the rows and columns
 			for (int y = 0; y < this.getHeight(); y++) {
-				for (int x = 0; x < this.getWidth(); x++) {					
+				for (int x = 0; x < this.getWidth(); x++) {		
+					
+					// If the elements are not the same at this position
 					if (grid[x][y] != compGrid[x][y]) {
+						// And if neither of the tiles is the agent character
 						if (!((grid[x][y] == AGENT_CHAR && compGrid[x][y] == EMPTY_CHAR) || (grid[x][y] == EMPTY_CHAR && compGrid[x][y] == AGENT_CHAR))) {
 							equal = false;
 						}
@@ -185,11 +215,18 @@ public class Grid {
 		return equal;
 	}
 	
+	/*
+	 * Method to find a char in the grid
+	 */
 	public int[] findInGrid(char toFind) {
+		// Array to store the x,y position
 		int[] pos = new int[2];
 		
+		// Loop over the rows and columns
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
+				
+				// If we've found it then set position array elements and break
 				if (grid[x][y] == toFind) {
 					pos[0] = x;
 					pos[1] = y;
@@ -202,22 +239,37 @@ public class Grid {
 		return pos;
 	}
 	
+	/*
+	 * Method to return the width of the grid
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/*
+	 * Method to return the height of the grid
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
+	/*
+	 * Method to return the char array representing the grid
+	 */
 	public char[][] getGrid() {
 		return grid;
 	}
 	
+	/*
+	 * Method to return the x position of the agent
+	 */
 	public int getAgentX() {
 		return agentX;
 	}
 	
+	/*
+	 * Method to return the y position of the agent
+	 */
 	public int getAgentY() {
 		return agentY;
 	}
