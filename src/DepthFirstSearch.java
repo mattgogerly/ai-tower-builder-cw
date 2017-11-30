@@ -19,7 +19,7 @@ public class DepthFirstSearch {
 	
 	// int to count the number of nodes visited
 	private int counter;
-	
+
 	/*
 	 * Constructor to initialise a new DFS
 	 */
@@ -63,7 +63,7 @@ public class DepthFirstSearch {
 			// For each Node in the list of children
 			for (Node n : childNodes) {
 				n.calculateHeuristic(goalState);
-				fringe.add(n);
+				fringe.push(n);
 			}
 		}
 		
@@ -103,10 +103,11 @@ public class DepthFirstSearch {
 		int moves = solution.size() - 1;                                         
 		                                                                         
 		// While the stack isn't empty pop it, get the grid and print it         
-		while (!solution.isEmpty()) {                                            
-			solution.pop().getGrid().printGrid();                                
-			System.out.println();                                                
-		}                                                                        
+		while (!solution.isEmpty()) {  
+			Node n = solution.pop();
+			System.out.println("Move #" + n.getDepth());
+			n.getGrid().printGrid();                                                                              
+		}                                                                      
 		                                                                         
 		System.out.println("Nodes visited: " + counter);                         
 		System.out.println("Number of moves from start to goal state: " + moves);

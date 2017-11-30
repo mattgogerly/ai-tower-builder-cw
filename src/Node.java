@@ -109,7 +109,7 @@ public class Node implements Comparable<Node> {
 		totalDistance += distance;
 		
 		// Our heuristic is the total distance + the current depth (reduced since it's a small grid)
-		heuristic = totalDistance + depth / 4;
+		heuristic = totalDistance + depth;
 	}
 	
 	/*

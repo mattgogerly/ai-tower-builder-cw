@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -138,10 +137,11 @@ public class IterativeDeepeningSearch {
 		}
 		
 		// While the stack isn't empty pop it, get the grid and print it
-		while (!solution.isEmpty()) {
-			solution.pop().getGrid().printGrid();
-			System.out.println();
-		}
+		while (!solution.isEmpty()) {  
+			Node n = solution.pop();
+			System.out.println("Move #" + n.getDepth());
+			n.getGrid().printGrid();                                                                              
+		}     
 		
 		System.out.println("Total number of nodes visited: " + counter);
 		

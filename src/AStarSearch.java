@@ -20,6 +20,8 @@ public class AStarSearch {
 	// int to count the number of nodes visited
 	private int counter;
 	
+	int size;
+	
 	/*
 	 * Constructor to initialise a new A* Search.
 	 */
@@ -65,6 +67,10 @@ public class AStarSearch {
 				n.calculateHeuristic(goalState);
 				fringe.add(n);
 			}
+			
+			if (size < fringe.size()) {
+				size = fringe.size();
+			}
 		}
 	
 		// If we've found a solution
@@ -105,9 +111,10 @@ public class AStarSearch {
 		int moves = solution.size() - 1;
 		
 		// While the stack isn't empty pop it, get the grid and print it
-		while (!solution.isEmpty()) {
-			solution.pop().getGrid().printGrid();
-			System.out.println();
+		while (!solution.isEmpty()) {  
+			Node n = solution.pop();
+			System.out.println("Move #" + n.getDepth());
+			n.getGrid().printGrid();                                                                              
 		}
 		
 		System.out.println("Nodes visited: " + counter);

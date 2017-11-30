@@ -1,50 +1,29 @@
 public class Solve {
 	
 	public static void main(String[] args) {
-		Grid startState = new Grid();
+		Grid startState = new Grid("XXXAXXXBXXXCXXXT", 4, 4);
+		Grid goalState;
 		
-		Grid goalState = createGoalGrid("XXXXXABCXXXXXXXT", 4, 4);
-		
-		// BreadthFirstSearch bfs = new BreadthFirstSearch();
-		// bfs.searchForSolution(startState, goalState, false);
-		
-		// DepthFirstSearch dfs = new DepthFirstSearch();
-		// dfs.searchForSolution(startState, goalState, false);
-		
-		// IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
-		// ids.searchForSolution(startState, goalState, false);
-		
-		 AStarSearch ass = new AStarSearch();
-		 ass.searchForSolution(startState, goalState, false);
-	}
-	
-	public static Grid createGoalGrid(String input, int width, int height) {
-		char[][] goalGrid = new char[width][height];
-		char[] temp = input.toCharArray();
-		
-		if ((width * height) != temp.length) {
-			System.err.print("Invalid input string");
+		if (args.length == 3) {
+			Integer width = Integer.parseInt(args[1]);
+			Integer height = Integer.parseInt(args[2]);
+			
+			goalState = new Grid(args[0], width, height);
+		} else {
+			goalState = new Grid("XXXXXABCXXXXXXXT", 4, 4);
 		}
 		
-		Integer agentX = null;
-		Integer agentY = null;
+		//BreadthFirstSearch bfs = new BreadthFirstSearch();
+		//bfs.searchForSolution(startState, goalState, true);
 		
-		int count = 0;
+		//DepthFirstSearch dfs = new DepthFirstSearch();
+		//dfs.searchForSolution(startState, goalState, true);
 		
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				
-				if (temp[count] == 'T') {
-					agentX = i;
-					agentY = j;
-				}
-				
-				goalGrid[i][j] = temp[count];
-				count++;
-			}
-		}
+		//IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
+		//ids.searchForSolution(startState, goalState, true);
 		
-		return new Grid(goalGrid, agentX, agentY);
+		//AStarSearch ass = new AStarSearch();
+		//ass.searchForSolution(startState, goalState, true);
 	}
 	
 }

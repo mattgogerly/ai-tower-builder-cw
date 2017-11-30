@@ -22,26 +22,30 @@ public class Grid {
 	private static final char AGENT_CHAR = 'T';
 	
 	/*
-	 * Constructor to initialise a new Grid with the defined start state
+	 * Constructor to initialise a new Grid with the provided state
 	 */
-	public Grid() {
-		grid = new char[width][height];
+	public Grid(String input, int width, int height) {
+		this.grid = new char[width][height];
+		char[] temp = input.toCharArray();
 		
-		for (int y = 0; y < height - 1; y++) {
-			for (int x = 0; x < width; x++ ) {
-				grid[x][y] = EMPTY_CHAR;
-			}
+		if ((width * height) != temp.length) {
+			System.err.print("Invalid input string");
 		}
 		
-		// Initialise the blocks to their starting positions (bottom left of the grid)
-		grid[0][height - 1] = 'A';
-		grid[1][height - 1] = 'B';
-		grid[2][height - 1] = 'C';
+		int count = 0;
 		
-		// Agent is initialised in bottom right
-		grid[3][height - 1] = AGENT_CHAR;
-		agentX = width - 1;
-		agentY = height - 1;
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				
+				if (temp[count] == 'T') {
+					this.agentX = i;
+					this.agentY = j;
+				}
+				
+				this.grid[i][j] = temp[count];
+				count++;
+			}
+		}
 	}
 	
 	/*
