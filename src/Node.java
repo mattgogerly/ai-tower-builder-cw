@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/*
+ * Class representing a node in the tree
+ */
+
 public class Node implements Comparable<Node> {
 	// The state of the grid at this node
 	private Grid grid;

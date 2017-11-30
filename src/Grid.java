@@ -1,5 +1,9 @@
 import java.util.Arrays;
 
+/*
+ * Class representing the grid at any state
+ */
+
 public class Grid {
 	private char[][] grid; // 2D Array to store the state of the grid
 	

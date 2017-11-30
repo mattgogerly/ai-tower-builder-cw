@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
+/*
+ * An implementation of A* heuristic (tree) search
+ */
+
 public class AStarSearch {
 	
 	// Stack to contain the nodes forming the solution

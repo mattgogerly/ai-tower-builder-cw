@@ -3,6 +3,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+/*
+ * An implementation of depth first (tree) search
+ */
+
 public class DepthFirstSearch {
 	
 	// Stack containing the nodes forming the solution

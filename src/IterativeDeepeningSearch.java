@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/*
+ * An implementation of iterative deepening (tree) search
+ */
+
 public class IterativeDeepeningSearch {
 	
 	// Stack containing the nodes forming the solution

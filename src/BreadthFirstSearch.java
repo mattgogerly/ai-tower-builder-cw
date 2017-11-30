@@ -3,6 +3,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+/*
+ * An implementation of breadth first (tree) search
+ */
+
 public class BreadthFirstSearch {
 	
 	// Stack containing the nodes forming the solution
